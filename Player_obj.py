@@ -9,8 +9,7 @@ class Player(object):
         self.rows = num_rows
         self.cols = num_cols
         self.body_queue = deque()
-        self.body_queue.appendleft(self.head_position)
-
+        self.body_queue.appendleft(self.head_position.copy())
         self.body_set = set()
         self.body_set.add(tuple(self.head_position))
 
@@ -30,7 +29,7 @@ class Player(object):
 
         self.direction = new_direction
 
-    def move(self):
+    def move(self, apple):
         self.last_direction = self.direction
         if self.direction == 'R':
             self.head_position[1] += 1
@@ -44,9 +43,13 @@ class Player(object):
         if self.detect_collision():
             return 1
 
+        self.body_queue.appendleft(self.head_position.copy())
         self.body_set.add(tuple(self.head_position))
-        self.body_queue.appendleft(self.head_position)
-
+        if self.head_position == apple.apple_position:
+            apple.generate_apple(self)
+        else:
+            tail_position = self.body_queue.pop()
+            self.body_set.discard(tuple(tail_position))
 
 
     def paint(self, screen, cell_size):

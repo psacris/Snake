@@ -21,6 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Apple_obj.py" />
     <Compile Include="Grid_obj.py" />
     <Compile Include="Player_obj.py" />
     <Compile Include="Snake.py" />

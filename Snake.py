@@ -1,14 +1,14 @@
 import pygame
 from Grid_obj import Grid
 from Player_obj import Player
-
+from Apple_obj import Apple
 
 pygame.init()
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
 GRID_ROWS = 20
-GRID_COLS = 10
+GRID_COLS = 20
 
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -22,6 +22,7 @@ pygame.time.set_timer(TIMER_EVENT, 200)  # 1000 milliseconds (1 second)
 clock = pygame.time.Clock()
 grid = Grid(GRID_ROWS,GRID_COLS)
 player = Player(GRID_ROWS, GRID_COLS, 1,1)
+apple = Apple(GRID_ROWS, GRID_COLS)
 
 running = True
 is_game_over = False
@@ -30,7 +31,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == TIMER_EVENT:
-            is_game_over = player.move()
+            is_game_over = player.move(apple)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
                 running = False
@@ -55,6 +56,7 @@ while running:
     screen.fill((0, 20, 0))
     grid.paint(screen, cell_size)
     player.paint(screen, cell_size)
+    apple.paint(screen, cell_size)
 
     # Update the display
     pygame.display.flip()
